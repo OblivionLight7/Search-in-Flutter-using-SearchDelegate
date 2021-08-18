@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+
 List Names = [];
 
 void main() {
@@ -29,18 +30,53 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      // extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Color(0x00000000),
         elevation: 0,
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.green),
+        title: Text(
+          "Search here",
+          style: TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+
+
         actions: <Widget>[
+          //changes
+          IconButton(
+              icon: Stack(
+                children: [
+                  Align(
+                    child: Icon(Icons.shopping_cart),
+                    alignment: Alignment.centerLeft,
+                  ),
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: CircleAvatar(
+                        radius: 10,
+                        /*child: BlocBuilder<MedicineBloc, BlocState>(
+                                      builder: (context, state)=>Text('${BlocProvider.of<MedicineBloc>(context).cartProducts.length}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold))
+                                  ),*/
+                        backgroundColor: Colors.red,
+                      )
+                  )
+                ],
+              ),
+              //onPressed: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Cart())),
+              onPressed: (){}
+          ),
+          //till here
+
+
           IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
                 showSearch(context: context, delegate: DataSearch());
               })
+
         ],
       ),
       drawer: Drawer(),
@@ -51,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+
 class Medicine {
+
   final String Name;
   final String Composition;
   final String Usage;
@@ -70,6 +108,9 @@ class Medicine {
     );
   }
 }
+
+
+
 
 class DataSearch extends SearchDelegate<String> {
   @override
@@ -101,6 +142,7 @@ class DataSearch extends SearchDelegate<String> {
           close(context, null);
         });
   }
+
 
   @override
   Widget buildResults(BuildContext context) {
@@ -169,6 +211,16 @@ class DataSearch extends SearchDelegate<String> {
                             data[index].Usage,
                             style: TextStyle(fontSize: 15),
                           ),
+
+                          //changes
+                          IconButton(
+                              icon: Icon(Icons.shopping_cart),
+                              //onPressed: ()=>BlocProvider.of<ProductBloc>(context).add(AddToCart(product: snap.data[index]))
+                              onPressed: (){}
+                          ),
+                          SizedBox(height: 15),
+
+                          //till here
                         ],
                       ),
                     ),
@@ -211,4 +263,5 @@ class DataSearch extends SearchDelegate<String> {
       itemCount: suggestionList.length,
     );
   }
+
 }
